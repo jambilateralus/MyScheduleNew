@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         TextView toDate;
         TextView fromDate;
         ImageButton menu;
+        ToggleButton notification;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -43,6 +45,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
             toDate = (TextView) itemView.findViewById(R.id.schedule_to_date);
             fromDate = (TextView) itemView.findViewById(R.id.schedule_from_date);
             menu = (ImageButton) itemView.findViewById(R.id.menu_button);
+            notification = (ToggleButton) itemView.findViewById(R.id.toggleButton);
             DataBase delete = new DataBase(MainActivity.appContext);
 
             //action to button

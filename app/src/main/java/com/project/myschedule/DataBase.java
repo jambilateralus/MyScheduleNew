@@ -19,6 +19,7 @@ public class DataBase {
     public static  final String KEY_TITTLE = "schedule_title";
     public static  final String KEY_FROM = "date_from";
     public static  final String KEY_TILL = "date_till";
+    public static  final String KEY_NOTIFICATION = "notification";
 
     //private variables and constant vriables for task table
     public static final String TASK_ID = "task_id";
@@ -64,7 +65,8 @@ public class DataBase {
                             KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
                             KEY_TITTLE +" TEXT NOT NULL, "+
                             KEY_FROM +" TEXT NOT NULL, "+
-                            KEY_TILL +" TEXT NOT NULL);"
+                            KEY_TILL +" TEXT NOT NULL" +
+                            KEY_NOTIFICATION +"INTEGER" +");"
             );
 
             sqLiteDatabase.execSQL("CREATE TABLE " +TABLE_TASK + "(" +
@@ -113,11 +115,12 @@ public class DataBase {
 
 
     //insert query forschedule table
-    public long addSchedule(String title, String from, String till){
+    public long addSchedule(String title, String from, String till,Boolean notify){
         ContentValues cv = new ContentValues();
         cv.put(KEY_TITTLE,title);
         cv.put(KEY_FROM, String.valueOf(from));
         cv.put(KEY_TILL, String.valueOf(till));
+        cv.put(KEY_NOTIFICATION, String.valueOf(notify));
         return ourDatabase.insert(TABLE_SCHEDULE,null,cv);
 
     }
@@ -125,14 +128,14 @@ public class DataBase {
 
     //Get total number of schedule
     public int getScheduleCount(){
-        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL};
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
         Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
         return c.getCount();
     }
 
     //Get schedule title
     public String getScheduleTitle(int position){
-        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL};
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
         Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
         int iTitle =c.getColumnIndex(KEY_TITTLE);
         c.moveToPosition(position);
@@ -144,7 +147,7 @@ public class DataBase {
 
     //Get schedule from date
     public String getScheduleFromDate(int index){
-        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL};
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL,KEY_NOTIFICATION};
         Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
         c.moveToPosition(index);
         int iFrom =c.getColumnIndex(KEY_FROM);
@@ -154,7 +157,7 @@ public class DataBase {
 
     //Get schedule to date
     public String getScheduleToDate(int index){
-        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL};
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
         Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
         c.moveToPosition(index);
         int iTill =c.getColumnIndex(KEY_TILL);
@@ -163,7 +166,7 @@ public class DataBase {
 
     //get schedule id
     public long getScheduleId(int index){
-        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL};
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
         Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
         c.moveToPosition(index);
         int iId = c.getColumnIndex(KEY_ROWID);
@@ -171,9 +174,27 @@ public class DataBase {
 
     }
 
+    //get notification
+    public long getNotification(int index){
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
+        Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
+        c.moveToPosition(index);
+        int iId = c.getColumnIndex(KEY_NOTIFICATION);
+        return c.getLong(iId);
+
+    }
+
+    //set notification
+    public void setNotification(int index,boolean status){
+        ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +"SET "+KEY_NOTIFICATION +"= " +status +"WHERE " +KEY_ROWID +"= "+index);
+
+
+    }
+
+
     //check if schedule title already exist... returns true if entry already exists on database
     public boolean checkScheduleTitle(String title){
-        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL};
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
         Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
 
         boolean result = false;

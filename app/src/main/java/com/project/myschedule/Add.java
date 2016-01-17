@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 import android.widget.Toolbar;
 
 import java.util.Calendar;
@@ -35,9 +38,12 @@ public class Add extends AppCompatActivity {
     Button fButton;
     Button tButton;
 
+
+
     //Schedule title
     EditText schedule_title;
     String title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +51,11 @@ public class Add extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_action_content_add); // or setLogo()
+
+        final ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         //Assign current date to variables.
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -60,7 +69,6 @@ public class Add extends AppCompatActivity {
         //Set label of buttons to current date
         fButton.setText(mDay + "/" + mMonth + "/" + mYear);
         tButton.setText(mDay + "/" + mMonth + "/" + mYear);
-
         //Set click listener on fButton
         fButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,9 +192,10 @@ public class Add extends AppCompatActivity {
                     //database action add sechudule
                     String from = fButton.getText().toString();
                     String till = tButton.getText().toString();
+                    boolean status = true;
                     DataBase add = new DataBase(Add.this);
                     add.open();
-                    add.addSchedule(title, from, till);
+                    add.addSchedule(title, from, till,status);
                     add.close();
                 }catch (Exception e){
                     ditItWork = false;
@@ -209,9 +218,9 @@ public class Add extends AppCompatActivity {
                 startActivity(Goto);
             }
         }
+        //on back button clicked
         else if(id== android.R.id.home){
-            onBackPressed();
-            return true;
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
