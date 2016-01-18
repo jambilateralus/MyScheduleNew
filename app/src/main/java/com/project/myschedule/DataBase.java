@@ -21,6 +21,7 @@ public class DataBase {
     public static  final String KEY_FROM = "date_from";
     public static  final String KEY_TILL = "date_till";
     public static  final String KEY_NOTIFICATION = "notification";
+    public static final String KEY_ID = "ID";
 
     //private variables and constant vriables for task table
     public static final String TASK_ID = "task_id";
@@ -67,7 +68,8 @@ public class DataBase {
                             KEY_TITTLE +" TEXT NOT NULL, "+
                             KEY_FROM +" TEXT NOT NULL, "+
                             KEY_TILL +" TEXT NOT NULL ," +
-                            KEY_NOTIFICATION +" INTEGER" +");"
+                            KEY_NOTIFICATION +" INTEGER" +
+                            KEY_ID + "INTEGER AUTOINCREMENT " +");"
             );
 
             sqLiteDatabase.execSQL("CREATE TABLE " +TABLE_TASK + "(" +
@@ -225,6 +227,7 @@ public class DataBase {
     //delete schedule from schedule table
     public void deleteSchedule(long id){
         ourDatabase.delete(TABLE_SCHEDULE,KEY_ROWID + "=" +id,null);
+        ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +"SET "+KEY_ID +"= "+KEY_ID +"-1 " +"WHERE " +KEY_ROWID +" = "+"> "+id);
     }
 
 
