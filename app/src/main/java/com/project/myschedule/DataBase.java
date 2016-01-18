@@ -22,7 +22,7 @@ public class DataBase {
     public static  final String KEY_TILL = "date_till";
     public static  final String KEY_NOTIFICATION = "notification";
 
-    //private variables and constant vriables for task table
+    //private variables and constant  vriables for task table
     public static final String TASK_ID = "task_id";
     public static final String TASK_COL1= "schedule_id";
     public static final String TASK_COL2 = "task_name";
