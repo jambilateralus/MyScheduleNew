@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_add" android:title="Add"
+        android:icon="@drawable/ic_add_circle_outline"
         android:orderInCategory="100" app:showAsAction="always" />
     <item android:id="@+id/action_calendar" android:title="Calendar View"
         android:orderInCategory="100" app:showAsAction="never" />

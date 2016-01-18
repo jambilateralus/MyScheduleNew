@@ -71,7 +71,10 @@
                 android:background="@drawable/check"
                 android:layout_above="@+id/schedule_from_date"
                 android:layout_alignRight="@+id/menu_button"
-                android:layout_alignEnd="@+id/menu_button" />
+                android:layout_alignEnd="@+id/menu_button"
+                android:textOn=""
+                android:textOff=""
+                android:text="" />
 
         </RelativeLayout>
 
