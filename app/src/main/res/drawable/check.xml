@@ -3,7 +3,7 @@
     <!-- When selected, use grey -->
     <item android:drawable="@drawable/active"
         android:state_checked="true" />
-    <!-- When not selected, use white-->
+    <!-- When not selected, use whi te-->
     <item android:drawable="@drawable/inactive"
         android:state_checked="false"/>
 
