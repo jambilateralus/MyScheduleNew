@@ -192,25 +192,12 @@ public class DataBase {
 
     //set notification
     public void setNotification(int index,boolean status){
-        int sta;
-        if(!status){sta = 0;}
-        else {sta = 1;}
+        int val;
+        if(status){val = 1;}
+        else {val = 0;}
 
 
-        //ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +" SET "+KEY_NOTIFICATION +" = '" +sta +"' WHERE " +KEY_ROWID +" = "+index);
-        //ourDatabase.update(TABLE_SCHEDULE,cv,KEY_ROWID+" = "+index,null);
-
-        SQLiteDatabase db =ourHelper.getWritableDatabase();
-        if(db==null){return;}
-
-        ContentValues cv = new ContentValues();
-        cv.put(KEY_NOTIFICATION, sta);
-        db.update(TABLE_SCHEDULE,cv,"schedule_id = ?",new String[]{String.valueOf(index)});
-        db.close();
-        //ourDatabase.update(TABLE_SCHEDULE, cv, KEY_ROWID + );
-
-        //String strSQL = "UPDATE schedule SET notification = 0 WHERE schedule_id = "+ index;
-        //ourDatabase.execSQL(strSQL);
+        ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +" SET "+KEY_NOTIFICATION +" = "+val+" WHERE " +KEY_ROWID +" = "+index);
 
     }
 

@@ -110,9 +110,9 @@ public class MyRecyclerViewAdapter extends RecyclerView
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 DataBase db = new DataBase(MainActivity.appContext);
                 db.open();
-                //db.setNotification(position,isChecked);
+                db.setNotification(position,isChecked);
                 //db.close();
-                if (isChecked) {
+                /*if (isChecked) {
                     Toast.makeText(MainActivity.appContext,
                             "on",
                             Toast.LENGTH_SHORT).show();
@@ -123,7 +123,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
                             Toast.LENGTH_SHORT).show();
                     db.setNotification(position, false);
 
-                }
+                }*/
 
             }
         });
@@ -174,7 +174,6 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 //toggle.toggle();
                 //boolean notify = notification.isActivated();
 
