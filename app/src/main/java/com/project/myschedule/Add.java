@@ -33,6 +33,12 @@ public class Add extends AppCompatActivity {
 
     //Variables to store date when it appears first
     private int mYear, mMonth, mDay;
+    static String months[] =
+            {
+                    null , "Jan" , "Feb" , "Mar" , "Apr", "May",
+                    "Jun", "Jul", "Aug", "Sep", "Oct",
+                    "Nov", "Dec"
+            };
 
     //From and till buttons
     Button fButton;
@@ -51,11 +57,17 @@ public class Add extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        //Set title
+        setTitle("New Schedule");
 
+
+        //Back arrow in action bar
         final ActionBar actionBar = getSupportActionBar();
         if (null != actionBar) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+
         //Assign current date to variables.
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -67,8 +79,8 @@ public class Add extends AppCompatActivity {
         tButton = (Button) findViewById(R.id.till_button);
 
         //Set label of buttons to current date
-        fButton.setText(mDay + "/" + mMonth + "/" + mYear);
-        tButton.setText(mDay + "/" + mMonth + "/" + mYear);
+        fButton.setText(mDay + " " + months[mMonth] + " " + mYear);
+        tButton.setText(mDay + " " + months[mMonth] + " " + mYear);
         //Set click listener on fButton
         fButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +115,7 @@ public class Add extends AppCompatActivity {
                     month = monthOfYear+1;
                     day = dayOfMonth;
                     // Set the Selected Date in Select date Button
-                    fButton.setText(day + "/" + month + "/" + year);
+                    fButton.setText(day + " " + months[month] + " " + year);
                 }
             };
 
@@ -117,7 +129,7 @@ public class Add extends AppCompatActivity {
                     month = monthOfYear+1;
                     day = dayOfMonth;
                     // Set the Selected Date in Select date Button
-                    tButton.setText(day + "/" + month + "/" + year);
+                    tButton.setText(day + " " + months[month] + " " + year);
                 }
             };
 
@@ -174,25 +186,26 @@ public class Add extends AppCompatActivity {
             if (title.matches("")) {
                 ToastMessage("Invalid schedule name");
                 // Vibrate for 100 milliseconds
-                v.vibrate(100);
-            }
+                v.vibrate(100);}
+
+
 
             //if the Schedule title already exists
             else if(db.checkScheduleTitle(title)){
                 ToastMessage("Schedule "+title + " already exists");
-
                 schedule_title.setText("");
                 // Vibrate for 100 milliseconds
                 v.vibrate(100);
             }
 
+            //Finally add contents to database
             else{
                 boolean ditItWork =true;
                 try {
                     //database action add sechudule
                     String from = fButton.getText().toString();
                     String till = tButton.getText().toString();
-                    boolean status = true;
+                    Boolean status = false;
                     DataBase add = new DataBase(Add.this);
                     add.open();
                     add.addSchedule(title, from, till,status);

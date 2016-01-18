@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".TaskList" >
         </activity>
+        <activity android:name=".AddTask" >
+        </activity>
     </application>
 
 </manifest>

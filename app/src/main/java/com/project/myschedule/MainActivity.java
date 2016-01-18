@@ -156,7 +156,8 @@ public class MainActivity extends AppCompatActivity
         int pos = db.getScheduleCount();
         for (int index = 0; index < db.getScheduleCount(); index++) {
             pos--;
-            DataObject obj = new DataObject(db.getScheduleTitle(pos),db.getScheduleToDate(pos),db.getScheduleFromDate(pos),db.getScheduleId(pos));
+
+            DataObject obj = new DataObject(db.getScheduleTitle(pos),db.getScheduleToDate(pos),db.getScheduleFromDate(pos),db.getScheduleId(pos),db.getNotification(pos));
             results.add(index, obj);
         }
         db.close();

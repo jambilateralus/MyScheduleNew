@@ -8,12 +8,14 @@ public class DataObject {
     private String toDate;
     private  String fromDate;
     private  long scheduleId;
+    private Boolean notify;
 
-    DataObject (String scheduleTitle, String toDate, String fromDate, long scheduleId){
+    DataObject (String scheduleTitle, String toDate, String fromDate, long scheduleId, Boolean notify){
         this.scheduleTitle = scheduleTitle;
         this.toDate = toDate;
         this.fromDate = fromDate;
         this.scheduleId = scheduleId;
+        this.notify = notify;
     }
 
     public String getScheduleTitle() {return scheduleTitle;}
@@ -35,6 +37,10 @@ public class DataObject {
     public Long getScheduleId(){return scheduleId;}
 
     public void  setFromDate(String fromDate){this.fromDate = fromDate;}
+
+    public void setNotifcationStatus(Boolean satus){this.notify = satus;}
+
+    public Boolean getNotificationStatus(){return notify;}
 
     //
     public void refresh(){
