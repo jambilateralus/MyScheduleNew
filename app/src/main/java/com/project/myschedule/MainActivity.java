@@ -153,6 +153,8 @@ public class MainActivity extends AppCompatActivity
         ArrayList results = new ArrayList<DataObject>();
         DataBase db = new DataBase(this.getBaseContext());
         db.open();
+        //test
+        //db.addTask(1,"nepal","2","4","hello");
         int pos = db.getScheduleCount();
         for (int index = 0; index < db.getScheduleCount(); index++) {
             pos--;
