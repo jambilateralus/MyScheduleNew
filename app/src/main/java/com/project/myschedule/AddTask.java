@@ -157,8 +157,7 @@ public class AddTask extends AppCompatActivity {
             String endTime = ""+eTime[0]+" "+eTime[1];
             String title = taskTitle.toString();
             String desp = taskDesp.toString();
-            //int scheduleId = bundle.getInt("scheduleId");
-            int scheduleId =10;
+            int scheduleId = bundle.getInt("scheduleId");
 
 
             //Check input data
