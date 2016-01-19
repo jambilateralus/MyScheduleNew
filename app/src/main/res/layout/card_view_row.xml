@@ -53,27 +53,31 @@
 
 
             <ImageButton
-                android:layout_width="35dp"
+                android:layout_width="50dp"
                 android:layout_height="35dp"
                 android:id="@+id/menu_button"
                 android:src="@drawable/menu"
                 android:layout_below="@+id/schedule_to_date"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:background="@null"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
             <ToggleButton
+                android:textOn=""
+                android:textOff=""
+                android:text=""
+                android:background="@drawable/check"
                 android:layout_width="60dp"
                 android:layout_height="63dp"
                 android:id="@+id/toggleButton"
                 android:layout_above="@+id/schedule_from_date"
                 android:layout_alignRight="@+id/menu_button"
                 android:layout_alignEnd="@+id/menu_button"
-                android:textOn=""
-                android:textOff=""
-                android:text="" />
+                />
 
         </RelativeLayout>
 

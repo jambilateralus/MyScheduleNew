@@ -21,20 +21,6 @@
             android:id="@+id/taskTitle"
             android:hint="Task Title"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start Time"
-            android:id="@+id/startTimeButton"
-            android:layout_weight="0.06" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="End Time"
-            android:id="@+id/endTimeButton"
-            android:layout_weight="0.06" />
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,5 +29,23 @@
             android:id="@+id/taskDescp"
             android:hint="Description"
             android:layout_weight="0.21" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Time"
+            android:textSize="25dp"
+            android:id="@+id/startTimeButton"
+            android:layout_weight="0.06" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Time"
+            android:textSize="25dp"
+            android:id="@+id/endTimeButton"
+            android:layout_weight="0.06" />
+
+
     </LinearLayout>
 </RelativeLayout>

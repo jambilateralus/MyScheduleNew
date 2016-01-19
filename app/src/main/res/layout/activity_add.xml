@@ -41,9 +41,8 @@
                 android:id="@+id/textView5" />
 
             <Button
-                android:background="@android:color/transparent"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/from_button"
                 android:layout_gravity="center_horizontal" />
@@ -68,9 +67,8 @@
                 android:id="@+id/textVie" />
 
             <Button
-                android:background="@android:color/transparent"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/till_button"
                 android:layout_gravity="center_horizontal" />

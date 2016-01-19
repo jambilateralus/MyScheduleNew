@@ -23,7 +23,7 @@ public class TaskList extends AppCompatActivity {
 
         //set title
         Bundle bundle = getIntent().getExtras();
-        String title = bundle.getString("index");
+        String title = bundle.getString("title");
         setTitle(title);
     }
 

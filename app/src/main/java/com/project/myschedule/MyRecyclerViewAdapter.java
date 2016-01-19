@@ -71,7 +71,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
             db.open();
             long indexRaw = db.getScheduleId(getPosition());
             int  index = new BigDecimal(indexRaw).intValueExact();
-            intent.putExtra("index",""+db.getScheduleTitle(getAdapterPosition())+""+db.getScheduleId(getAdapterPosition()));
+            intent.putExtra("index",db.getId(getAdapterPosition()));
+            intent.putExtra("title",""+db.getTitle(getAdapterPosition()));
 
             db.close();
             context.startActivity(intent);

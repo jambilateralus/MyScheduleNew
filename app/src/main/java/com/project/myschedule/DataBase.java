@@ -68,8 +68,7 @@ public class DataBase {
                             KEY_TITTLE +" TEXT NOT NULL, "+
                             KEY_FROM +" TEXT NOT NULL, "+
                             KEY_TILL +" TEXT NOT NULL ," +
-                            KEY_NOTIFICATION +" INTEGER" +
-                            KEY_ID + "INTEGER AUTOINCREMENT " +");"
+                            KEY_NOTIFICATION +" TEXT " +");"
             );
 
             sqLiteDatabase.execSQL("CREATE TABLE " +TABLE_TASK + "(" +
@@ -199,7 +198,7 @@ public class DataBase {
         else {val = 0;}
 
 
-        ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +" SET "+KEY_NOTIFICATION +" = "+val+" WHERE " +KEY_ROWID +" = "+index);
+        ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +" SET "+KEY_NOTIFICATION +" = "+val+" WHERE " +KEY_ROWID +" = "+getId(index));
 
     }
 
@@ -226,8 +225,17 @@ public class DataBase {
 
     //delete schedule from schedule table
     public void deleteSchedule(long id){
-        ourDatabase.delete(TABLE_SCHEDULE,KEY_ROWID + "=" +id,null);
-        ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +"SET "+KEY_ID +"= "+KEY_ID +"-1 " +"WHERE " +KEY_ROWID +" = "+"> "+id);
+
+        ourDatabase.delete(TABLE_SCHEDULE, KEY_ROWID + "=" + id, null);
+        //ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +" SET "+KEY_ID +"= "+KEY_ID +"-1 " +"WHERE " +KEY_ROWID +" = "+"> "+id);
+       /* long index,newValue;
+        long front = id+1;
+        for(long x = front; x<=getScheduleCount();x++){
+            index = x;
+            newValue = x-1;
+            ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE+ " SET "+KEY_ID+" = '"+newValue+"' WHERE " +KEY_ID +" = "+index);
+        }*/
+
     }
 
 
@@ -246,6 +254,53 @@ public class DataBase {
         cv.put(TASK_COL7,desp );
         return ourDatabase.insert(TABLE_TASK,null,cv);
     }
+
+    //get KEYUD
+    /*public int getKeyId(int id){
+        String[] columns = new String[]{KEY_ROWID,KEY_ID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
+        Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
+        int iKey =c.getColumnIndex(KEY_ID);
+        c.moveToPosition(id);
+        return c.getInt(iKey);
+
+    }*/
+
+
+    //Get schedule title from
+    public String getTitle(int position){
+        //int pos = position +1;
+        int pos = getScheduleCount() - position;
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
+        Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
+        c.moveToFirst();
+        for(int i = 1; i<= pos-1; i++){
+            c.moveToNext();
+        }
+        int iTitle =c.getColumnIndex(KEY_TITTLE);
+        return c.getString(iTitle);
+
+    }
+
+
+    //Get row id from cardview position
+    public int getId(int position){
+        //int pos = position +1;
+        int pos = getScheduleCount() - position;
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
+        Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
+        c.moveToFirst();
+        for(int i = 1; i<= pos-1; i++){
+            c.moveToNext();
+        }
+        int iTitle =c.getColumnIndex(KEY_ROWID);
+        return c.getInt(iTitle);
+
+    }
+
+
+
+
+
 
 
 

@@ -205,7 +205,7 @@ public class Add extends AppCompatActivity {
                     //database action add sechudule
                     String from = fButton.getText().toString();
                     String till = tButton.getText().toString();
-                    Boolean status = false;
+                    Boolean status = true;
                     DataBase add = new DataBase(Add.this);
                     add.open();
                     add.addSchedule(title, from, till,status);
