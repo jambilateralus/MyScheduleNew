@@ -29,7 +29,7 @@ public class DataBase {
     public static final String TASK_COL2 = "task_name";
     public static final String TASK_COL3 = "task_srt_time";
     public static final String TASK_COL4 = "task_end_time";
-    public static final String TASK_COL7= "task_desp";
+    public static final String TASK_COL5= "task_desp";
 
 
 
@@ -75,8 +75,8 @@ public class DataBase {
                             TASK_COL2 +" TEXT NOT NULL, "+
                             TASK_COL3 +" TEXT NOT NULL, "+
                             TASK_COL4 +" TEXT NOT NULL, "+
-                            TASK_COL7 +" TEXT NOT NULL, " +
-                            " FOREIGN KEY(" +TASK_COL2 +")" +
+                            TASK_COL5 +" TEXT NOT NULL, " +
+                            " FOREIGN KEY(" +TASK_COL1 +")" +
                             " REFERENCES "+TABLE_SCHEDULE +"(" +KEY_ROWID +") "+
                             ");"
             );
@@ -240,14 +240,15 @@ public class DataBase {
 
     //TODO add task not working
     //add task in task table
-    public void addTask(int sch_id, String title, String startTime, String endTime,String desp){
+    public long addTask(int sch_id, String title, String startTime, String endTime,String desp){
         ContentValues cv = new ContentValues();
-        cv.put(TASK_COL1,sch_id);
+        //cv.put(TASK_ID,"1");
+        cv.put(TASK_COL1,Integer.valueOf(sch_id));
         cv.put(TASK_COL2, title);
-        cv.put(TASK_COL3, startTime);
-        cv.put(TASK_COL4, endTime);
-        cv.put(TASK_COL7,desp );
-        ourDatabase.insert(TABLE_TASK,null,cv);
+        cv.put(TASK_COL3, String.valueOf(startTime));
+        cv.put(TASK_COL4, String.valueOf(endTime));
+        cv.put(TASK_COL5, desp);
+        return ourDatabase.insert(TABLE_TASK,null,cv);
     }
 
     //get KEYUD
