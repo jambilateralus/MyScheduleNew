@@ -6,9 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 public class TaskList extends AppCompatActivity {
     private Bundle bundle;
+    //private ListView lv = (ListView) findViewById(R.id.taskListView);
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,31 @@ public class TaskList extends AppCompatActivity {
         bundle = getIntent().getExtras();
         String title = bundle.getString("title");
         setTitle(title);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /*
+        //Display task list
+        DataBase db = new DataBase(getBaseContext());
+        db.open();
+        String[] taskTitle = new String[db.getScheduleCount()];
+        String[] taskStartTime = new String[db.getScheduleCount()];
+        String[] taskEndTime = new String[db.getScheduleCount()];
+        String[] taskDesp = new String[db.getScheduleCount()];
+
+
+        //Load contents of database to array
+        for (int i = 0; i<db.getScheduleCount(); i++){
+            taskTitle[i]= ;
+            taskStartTime[i]= ;
+            taskEndTime[i] = ;
+            taskDesp[i] = ;
+        }
+
+        //Set Custom adapter to listview
+
+
+        */
+
     }
 
 
