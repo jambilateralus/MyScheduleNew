@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class TaskList extends AppCompatActivity {
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class TaskList extends AppCompatActivity {
 
 
         //set title
-        Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
         String title = bundle.getString("title");
         setTitle(title);
     }
@@ -40,6 +41,9 @@ public class TaskList extends AppCompatActivity {
 
         //on add button pressed
         else if(id == R.id.action_add_task){
+            int scheduleId = bundle.getInt("index");
+            Intent addTask = new Intent(getBaseContext(),AddTask.class);
+            addTask.putExtra("scheduleId",scheduleId);
             startActivity(new Intent(getBaseContext(),AddTask.class));
         }
 

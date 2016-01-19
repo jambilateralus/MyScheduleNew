@@ -31,6 +31,7 @@ public class AddTask extends AppCompatActivity {
     private EditText taskDesp;
     private int[] sTime = new int[2];
     private int[] eTime=new int[2];
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class AddTask extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 //time set stuff
                 sTime[0] = hourOfDay;
-                eTime[1] = minute;
+                sTime[1] = minute;
                 startTime.setText("Start: " + sTime[0] + ":" + sTime[1]);
 
             }
@@ -156,6 +157,8 @@ public class AddTask extends AppCompatActivity {
             String endTime = ""+eTime[0]+" "+eTime[1];
             String title = taskTitle.toString();
             String desp = taskDesp.toString();
+            //int scheduleId = bundle.getInt("scheduleId");
+            int scheduleId =10;
 
 
             //Check input data
@@ -167,6 +170,10 @@ public class AddTask extends AppCompatActivity {
 
             else {
                 //Call database function from here
+                DataBase db = new DataBase(getBaseContext());
+                db.addTask(scheduleId,title,startTime,endTime,desp);
+                db.close();
+                //finish();
             }
 
 
