@@ -31,6 +31,11 @@ public class DataBase {
     public static final String TASK_COL4 = "task_end_time";
     public static final String TASK_COL5= "task_desp";
 
+    //private variables and constant for report table
+    public static final String REPORT_ID ="report_id";
+    public static final String REPORT_COL1="task_id";
+    public static final String REPORT_PERCENTAGE ="completeness";
+
 
 
     //variables for DATABASE
@@ -40,6 +45,7 @@ public class DataBase {
     //variables for TABLES
     private static final String TABLE_SCHEDULE ="schedule";
     private static final String TABLE_TASK ="task";
+    private static final String TABLE_REPORT ="report";
 
 
     //instances of DbHelper class and variables
@@ -81,6 +87,15 @@ public class DataBase {
                             ");"
             );
 
+            sqLiteDatabase.execSQL("CRETE TABLE "+TABLE_REPORT+"(" +
+                        REPORT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "+
+                            REPORT_COL1 +" INTEGER NOT NULL, "+
+                            REPORT_PERCENTAGE +" INTEGER NOT NULL, "+
+                            " FOREIGN KEY(" +REPORT_COL1 +")" +
+                            " REFERENCES "+TABLE_TASK +"(" +TASK_ID +") "+
+                            ");"
+            );
+
         }
 
         //if already have DAtabase in system
@@ -88,6 +103,7 @@ public class DataBase {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_SCHEDULE);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_TASK);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_REPORT);
             onCreate(sqLiteDatabase);
 
         }
@@ -292,6 +308,15 @@ public class DataBase {
         int iTitle =c.getColumnIndex(KEY_ROWID);
         return c.getInt(iTitle);
 
+    }
+
+    //methods for report
+    //add report
+    public long addReport(int task_id, int percentage){
+        ContentValues cv = new ContentValues();
+        cv.put(REPORT_COL1,Integer.valueOf(task_id));
+        cv.put(REPORT_PERCENTAGE, percentage);
+        return ourDatabase.insert(TABLE_REPORT, null, cv);
     }
 
 
