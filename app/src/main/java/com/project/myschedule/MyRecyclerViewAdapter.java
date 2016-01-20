@@ -64,7 +64,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         @Override
         public void onClick(View v) {
             myClickListener.onItemClick(getPosition(), v);
-            Log.i(LOG_TAG, "hmmmmmmm " + getPosition());
+            Log.i(LOG_TAG, "hmmmmmmm  " + getPosition());
             Context context = itemView.getContext();
             Intent intent = new Intent(context, TaskList.class);
             DataBase db = new DataBase(MainActivity.appContext);
