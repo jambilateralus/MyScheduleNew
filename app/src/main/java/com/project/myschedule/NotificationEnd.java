@@ -27,10 +27,18 @@ public class NotificationEnd extends AppCompatActivity {
         mp.setLooping(true);
         mp.start();
 
+
+
         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //tv.setText(String.valueOf(progress));
+                int val =progress;
+                DataBase  db = new DataBase(MainActivity.appContext);
+                db.open();
+                db.addReport(val);
+                db.close();
+
             }
 
             @Override

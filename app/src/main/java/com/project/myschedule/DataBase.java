@@ -67,14 +67,11 @@ public class DataBase {
             );
 
 
-/*            sqLiteDatabase.execSQL("CRETE TABLE "+TABLE_REPORT+"(" +
-                        REPORT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                            REPORT_COL1 +" INTEGER NOT NULL, "+
-                            REPORT_PERCENTAGE +" INTEGER NOT NULL, "+
-                            " FOREIGN KEY(" +REPORT_COL1 +")" +
-                            " REFERENCES "+TABLE_TASK +"(" +TASK_ID +") "+
+            sqLiteDatabase.execSQL("CREATE TABLE "+TABLE_REPORT+"(" +
+                            REPORT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "+
+                            REPORT_PERCENTAGE +" INTEGER NOT NULL "+
                             ");"
-            );*/
+            );
 
         }
 
@@ -82,7 +79,7 @@ public class DataBase {
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_TASK);
-            //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_REPORT);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_REPORT);
             onCreate(sqLiteDatabase);
 
         }
@@ -290,9 +287,8 @@ public class DataBase {
 
     //methods for report
     //add report
-    public long addReport(int task_id, int percentage){
+    public long addReport(int percentage){
         ContentValues cv = new ContentValues();
-        cv.put(REPORT_COL1, Integer.valueOf(task_id));
         cv.put(REPORT_PERCENTAGE, percentage);
         return ourDatabase.insert(TABLE_REPORT, null, cv);
     }

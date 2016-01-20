@@ -49,7 +49,7 @@ public class AddTask extends AppCompatActivity {
         taskDesp = (EditText) findViewById(R.id.taskDescp);
 
         //Set title
-        setTitle("New Task"+db.getLastTaskId());
+        //setTitle("New Task"+db.getLastTaskId());
 
         //Back arrow in action bar
         final ActionBar actionBar = getSupportActionBar();
