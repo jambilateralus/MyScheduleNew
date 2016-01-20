@@ -12,5 +12,7 @@ public class Notification extends AppCompatActivity {
         //Hide Action Bar
         getSupportActionBar().hide();
 
+
+
     }
 }

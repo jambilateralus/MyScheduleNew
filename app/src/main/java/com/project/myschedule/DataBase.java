@@ -87,14 +87,14 @@ public class DataBase {
                             ");"
             );
 
-            sqLiteDatabase.execSQL("CRETE TABLE "+TABLE_REPORT+"(" +
+/*            sqLiteDatabase.execSQL("CRETE TABLE "+TABLE_REPORT+"(" +
                         REPORT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "+
                             REPORT_COL1 +" INTEGER NOT NULL, "+
                             REPORT_PERCENTAGE +" INTEGER NOT NULL, "+
                             " FOREIGN KEY(" +REPORT_COL1 +")" +
                             " REFERENCES "+TABLE_TASK +"(" +TASK_ID +") "+
                             ");"
-            );
+            );*/
 
         }
 
@@ -103,7 +103,7 @@ public class DataBase {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_SCHEDULE);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_TASK);
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_REPORT);
+            //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_REPORT);
             onCreate(sqLiteDatabase);
 
         }
@@ -314,13 +314,14 @@ public class DataBase {
     //add report
     public long addReport(int task_id, int percentage){
         ContentValues cv = new ContentValues();
-        cv.put(REPORT_COL1,Integer.valueOf(task_id));
+        cv.put(REPORT_COL1, Integer.valueOf(task_id));
         cv.put(REPORT_PERCENTAGE, percentage);
         return ourDatabase.insert(TABLE_REPORT, null, cv);
     }
 
 
     //Get taskTitle
+    /*
     public String[] getTaskTitle(int scheduleId){
         int iTitle;
         int count = 0;
@@ -408,25 +409,47 @@ public class DataBase {
         return title;
     }
 
+*/
 
     public int getTaskCount(int scheduleID){
+//        addDummyValue();
         String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
         Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
-        int count = 0;
+        int count;
         int iSchId;
         c.moveToFirst();
-        while (!c.isLast()){
-            iSchId =c.getColumnIndex(TASK_COL1);
-            c.moveToNext();
-
-
-            if (c.getInt(iSchId)==scheduleID){
-                count++;
-            }
+        c.moveToNext();
+        //iSchId =c.getColumnIndex(TASK_COL1);
+        //while (!c.isLast()){
+        if(c.isNull(0)){
+            addDummyValue();
+            count=0;
+            //iSchId =c.getColumnIndex(TASK_ID);
+            //int count = c.getInt(iSchId);
+                //count++;
+            //}
+            //c.moveToNext();
+        }else {
+            iSchId = c.getColumnIndex(TASK_ID);
+            count = c.getInt(iSchId);
         }
+
+
         return count;
+
+        //return c.getInt(iSchId);
     }
 
+    private void addDummyValue(){
+        int val;
+        String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
+        c.moveToFirst();
+        val = c.getColumnIndex(TASK_ID);
+        if (c.getInt(val)!=1) {
+            addTask(10000000, "er", "fddsf", "Dfd", "dsfs");
+        }
+    }
 
 
 

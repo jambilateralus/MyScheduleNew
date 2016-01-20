@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 public class TaskList extends AppCompatActivity {
     private Bundle bundle;
-    private ListView lv;
+    //private ListView lv;
     private int shId;
     private DataBase db;
 
@@ -22,7 +22,7 @@ public class TaskList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
-        lv = (ListView) findViewById(R.id.taskListView);
+        //lv = (ListView) findViewById(R.id.taskListView);
         //Back Button
         final ActionBar actionBar = getSupportActionBar();
         if (null != actionBar) {
@@ -34,11 +34,17 @@ public class TaskList extends AppCompatActivity {
         bundle = getIntent().getExtras();
         shId = bundle.getInt("index");
         String title = bundle.getString("title");
-        setTitle(title);
+
+        db = new DataBase(getBaseContext());
+        db.open();
+        int totalTask = db.getTaskCount(shId);
+        setTitle(title+" "+shId+" "+totalTask);
+        db.close();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //Display task list
+
+     /*   //Display task list
         db = new DataBase(getBaseContext());
         db.open();
         /*String[] taskTitle = new String[db.getScheduleCount()];
@@ -58,14 +64,16 @@ public class TaskList extends AppCompatActivity {
         //Set Custom adapter to listview
 
 
-        */
+
 
 
         //set custom adapter to list view
         TaskListAdapter adpt = new TaskListAdapter(this,db.getTaskTitle(shId),db.getDesp(shId),db.getStartTime(shId),db.getEndTime(shId));
         lv.setAdapter(adpt);
-        db.close();
+        */
+        //db.close();
     }
+
 
 
     @Override
