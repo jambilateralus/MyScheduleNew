@@ -10,7 +10,9 @@ import android.widget.ListView;
 
 public class TaskList extends AppCompatActivity {
     private Bundle bundle;
-    //private ListView lv = (ListView) findViewById(R.id.taskListView);
+    private ListView lv;
+    private int shId;
+    private DataBase db;
 
 
 
@@ -20,6 +22,7 @@ public class TaskList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
 
+        lv = (ListView) findViewById(R.id.taskListView);
         //Back Button
         final ActionBar actionBar = getSupportActionBar();
         if (null != actionBar) {
@@ -29,15 +32,16 @@ public class TaskList extends AppCompatActivity {
 
         //set title
         bundle = getIntent().getExtras();
+        shId = bundle.getInt("index");
         String title = bundle.getString("title");
         setTitle(title);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /*
+
         //Display task list
-        DataBase db = new DataBase(getBaseContext());
+        db = new DataBase(getBaseContext());
         db.open();
-        String[] taskTitle = new String[db.getScheduleCount()];
+        /*String[] taskTitle = new String[db.getScheduleCount()];
         String[] taskStartTime = new String[db.getScheduleCount()];
         String[] taskEndTime = new String[db.getScheduleCount()];
         String[] taskDesp = new String[db.getScheduleCount()];
@@ -56,6 +60,11 @@ public class TaskList extends AppCompatActivity {
 
         */
 
+
+        //set custom adapter to list view
+        TaskListAdapter adpt = new TaskListAdapter(this,db.getTaskTitle(shId),db.getDesp(shId),db.getStartTime(shId),db.getEndTime(shId));
+        lv.setAdapter(adpt);
+        db.close();
     }
 
 
@@ -71,9 +80,9 @@ public class TaskList extends AppCompatActivity {
 
         //on add button pressed
         else if(id == R.id.action_add_task){
-            int scheduleId = bundle.getInt("index");
+            //int scheduleId = bundle.getInt("index");
             Intent addTask = new Intent(getBaseContext(),AddTask.class);
-            addTask.putExtra("scheduleId",scheduleId);
+            addTask.putExtra("scheduleId",shId);
             startActivity(new Intent(getBaseContext(),AddTask.class));
         }
 

@@ -1,7 +1,6 @@
 package com.project.myschedule;
 
 import android.app.AlarmManager;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -18,7 +17,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -157,41 +155,29 @@ public class AddTask extends AppCompatActivity {
 
             String startTime = ""+sTime[0]+" "+sTime[1];
             String endTime = ""+eTime[0]+" "+eTime[1];
-            String title = taskTitle.getText().toString();
-            String desp = taskDesp.getText().toString();
+            String title = taskTitle.toString();
+            String desp = taskDesp.toString();
+            int scheduleId = bundle.getInt("scheduleId");
 
-            //TODO bundle bata taney ko ma problem xa...ani facebook ma online au :D
-            //int scheduleId = bundle.getInt("scheduleId");
-            int scheduleId = 1;
-
+            //int scheduleId = 1;
 
             //Check input data
             if(title.matches("") || (sTime[0]==eTime[0]&&sTime[1]==eTime[1])){
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 Toast.makeText(getBaseContext(), "Invalid Data", Toast.LENGTH_SHORT).show();
                 v.vibrate(100);
-            } else {
-                boolean ditItWork =true;
-                try {
-                    //database action add sechudule
-                    DataBase add = new DataBase(AddTask.this);
-                    add.open();
-                    add.addTask(scheduleId,title,startTime,endTime,desp);
-                    add.close();
-                }catch (Exception e){
-                    ditItWork = false;
+            }
 
-                }finally {
-                    if(!ditItWork){
-                        Toast.makeText(getBaseContext(), "unsucess", Toast.LENGTH_SHORT).show();
-                    }
-                }
+            else {
                 //Call database function from here
-                //DataBase db = new DataBase(getBaseContext());
-                //db.open();
-                //db.addTask(1,"ha","1","endTime","desp");
-                //db.close();
+                DataBase db = new DataBase(getBaseContext());
+                db.addTask(10,title,startTime,endTime,desp);
+                db.close();
                 //finish();
+
+                //Start Alarm
+                //startAlarm(sTime[0],sTime[1]);
+                new Alarm().addAlarm(sTime[0],sTime[1]);
             }
 
 
@@ -206,6 +192,7 @@ public class AddTask extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.addtask, menu);
         return true;
     }
+
 
 
 

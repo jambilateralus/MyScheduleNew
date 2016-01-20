@@ -96,6 +96,7 @@ public class DataBase {
     //constructor
     public DataBase(Context c){
         this.ourContext =c;
+        open();
 
     }
 
@@ -294,6 +295,112 @@ public class DataBase {
     }
 
 
+    //Get taskTitle
+    public String[] getTaskTitle(int scheduleId){
+        int iTitle;
+        int count = 0;
+        int iId;
+        String[] title = new String[getTaskCount(scheduleId)];
+        String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
+        c.moveToFirst();
+        iTitle =c.getColumnIndex(TASK_COL1);
+        //while (c.getInt(iTitle)==scheduleId)
+        if(!c.isLast()){
+            c.moveToNext();
+            iId = c.getColumnIndex(TASK_COL1);
+            iTitle =c.getColumnIndex(TASK_COL2);
+            if(c.getInt(iId)==scheduleId) {
+                title[count] = c.getString(iTitle);
+            }
+        }
+        return title;
+    }
+
+    //Get startTime
+    public String[] getStartTime(int scheduleId){
+        int iTitle;
+        int count = 0;
+        int iId;
+        String[] title = new String[getTaskCount(scheduleId)];
+        String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
+        c.moveToFirst();
+        iTitle =c.getColumnIndex(TASK_COL3);
+        //while (c.getInt(iTitle)==scheduleId)
+        if(!c.isLast()){
+            c.moveToNext();
+            iId = c.getColumnIndex(TASK_COL1);
+            iTitle =c.getColumnIndex(TASK_COL3);
+            if(c.getInt(iId)==scheduleId) {
+                title[count] = c.getString(iTitle);
+            }
+        }
+        return title;
+    }
+
+    //Get endTime
+    public String[] getEndTime(int scheduleId){
+        int iTitle;
+        int count = 0;
+        int iId;
+        String[] title = new String[getTaskCount(scheduleId)];
+        String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
+        c.moveToFirst();
+        iTitle =c.getColumnIndex(TASK_COL4);
+        //while (c.getInt(iTitle)==scheduleId)
+        if(!c.isLast()){
+            c.moveToNext();
+            iId = c.getColumnIndex(TASK_COL1);
+            iTitle =c.getColumnIndex(TASK_COL4);
+            if(c.getInt(iId)==scheduleId) {
+                title[count] = c.getString(iTitle);
+            }
+        }
+        return title;
+    }
+
+    //Get startdesp
+    public String[] getDesp(int scheduleId){
+        int iTitle;
+        int count = 0;
+        int iId;
+        String[] title = new String[getTaskCount(scheduleId)];
+        String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
+        c.moveToFirst();
+        iTitle =c.getColumnIndex(TASK_COL5);
+        //while (c.getInt(iTitle)==scheduleId)
+        if(!c.isLast()){
+            c.moveToNext();
+            iId = c.getColumnIndex(TASK_COL1);
+            iTitle =c.getColumnIndex(TASK_COL5);
+            if(c.getInt(iId)==scheduleId) {
+                title[count] = c.getString(iTitle);
+            }
+        }
+        return title;
+    }
+
+
+    public int getTaskCount(int scheduleID){
+        String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
+        int count = 0;
+        int iSchId;
+        c.moveToFirst();
+        while (!c.isLast()){
+            iSchId =c.getColumnIndex(TASK_COL1);
+            c.moveToNext();
+
+
+            if (c.getInt(iSchId)==scheduleID){
+                count++;
+            }
+        }
+        return count;
+    }
 
 
 

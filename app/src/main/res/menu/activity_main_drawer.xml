@@ -2,18 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/nav_schedule"
-        android:title="Schedule" />
+        android:title="Schedule"
+        android:icon="@drawable/schedule"/>
 
     <item android:id="@+id/nav_routines"
-        android:title="Routines" />
+        android:title="Routines"
+        android:icon="@drawable/routine"/>
 
     <item android:id="@+id/nav_statistics"
-        android:title="Statistics" />
+        android:title="Statistics"
+        android:icon="@drawable/statictis"/>
 
     <item android:id="@+id/nav_settings"
-        android:title="Settings" />
+        android:title="Settings"
+        android:icon="@drawable/settimg"/>
 
     <item android:id="@+id/nav_help"
-        android:title="Help" />
+        android:title="Help"
+        android:icon="@drawable/help"/>
 
 </menu>
