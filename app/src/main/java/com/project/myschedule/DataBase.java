@@ -147,13 +147,7 @@ public class DataBase {
 
 
     //Get schedule to date
-    public String getTaskEndTime(int index){
-        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_TASK,columns,null,null,null,null,null);
-        c.moveToPosition(index);
-        int iTill =c.getColumnIndex(KEY_TILL);
-        return c.getString(iTill);
-    }
+
 
     //get schedule id
     public long getTaskId(int index){
@@ -291,6 +285,15 @@ public class DataBase {
         ContentValues cv = new ContentValues();
         cv.put(REPORT_PERCENTAGE, percentage);
         return ourDatabase.insert(TABLE_REPORT, null, cv);
+    }
+
+    //get percentage
+    public long getReportPercentage(int index){
+        String[] columns = new String[]{REPORT_ID, REPORT_PERCENTAGE};
+        Cursor c = ourDatabase.query(TABLE_REPORT,columns,null,null,null,null,null);
+        c.moveToPosition(index);
+        int iId = c.getColumnIndex(REPORT_PERCENTAGE);
+        return c.getLong(iId);
     }
 
 
