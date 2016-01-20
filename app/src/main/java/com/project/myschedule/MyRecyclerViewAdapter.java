@@ -66,15 +66,15 @@ public class MyRecyclerViewAdapter extends RecyclerView
             myClickListener.onItemClick(getPosition(), v);
             Log.i(LOG_TAG, "hmmmmmmm  " + getPosition());
             Context context = itemView.getContext();
-            Intent intent = new Intent(context, TaskList.class);
-            DataBase db = new DataBase(MainActivity.appContext);
-            db.open();
-            long indexRaw = db.getScheduleId(getPosition());
-            int  index = new BigDecimal(indexRaw).intValueExact();
-            intent.putExtra("index",db.getId(getAdapterPosition()));
-            intent.putExtra("title",""+db.getTitle(getAdapterPosition()));
+            Intent intent = new Intent(context, NotificationEnd.class);
+            //DataBase db = new DataBase(MainActivity.appContext);
+            //db.open();
+            //long indexRaw = db.getScheduleId(getPosition());
+            //int  index = new BigDecimal(indexRaw).intValueExact();
+            //intent.putExtra("index",db.getId(getAdapterPosition()));
+            //intent.putExtra("title",""+db.getTitle(getAdapterPosition()));
 
-            db.close();
+            //db.close();
             context.startActivity(intent);
         }
     }
@@ -99,9 +99,9 @@ public class MyRecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(final DataObjectHolder holder, final int position) {
-        holder.scheduleTitle.setText(mDataset.get(position).getScheduleTitle());
-        holder.toDate.setText("Till:     "+mDataset.get(position).getToDate());
-        holder.fromDate.setText("From: " + mDataset.get(position).getFromDate());
+        holder.scheduleTitle.setText(""+mDataset.get(position).getTaskTitle());
+        holder.toDate.setText("Till:     "+mDataset.get(position).getStartTime());
+        holder.fromDate.setText("From: " + mDataset.get(position).getEndTime());
         holder.notification.setChecked(mDataset.get(position).getNotificationStatus());
 
 
@@ -151,9 +151,9 @@ public class MyRecyclerViewAdapter extends RecyclerView
                                 DataBase delete = new DataBase(MainActivity.appContext);
                                 delete.open();
                                 Toast.makeText(MainActivity.appContext,
-                                        "Schedule " + mDataset.get(position).getScheduleTitle() + " deleted",
+                                        "Schedule " + mDataset.get(position).getTaskTitle() + " deleted",
                                         Toast.LENGTH_SHORT).show();
-                                delete.deleteSchedule(mDataset.get(position).getScheduleId());
+                                delete.deleteSchedule(mDataset.get(position).getTaskId());
                                 delete.close();
                                 deleteItem(position);
                                 updateResults(mDataset);

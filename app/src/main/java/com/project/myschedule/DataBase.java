@@ -16,20 +16,12 @@ import java.util.Date;
  */
 public class DataBase {
     //Private variables and constant variables for schedule tables
-    public static  final String KEY_ROWID = "schedule_id";
-    public static  final String KEY_TITTLE = "schedule_title";
-    public static  final String KEY_FROM = "date_from";
-    public static  final String KEY_TILL = "date_till";
+    public static  final String KEY_ROWID = "task_id";
+    public static  final String KEY_TITTLE = "task_title";
+    public static  final String KEY_FROM = "task_srt_time";
+    public static  final String KEY_TILL = "task_end_time";
     public static  final String KEY_NOTIFICATION = "notification";
-    public static final String KEY_ID = "ID";
-
-    //private variables and constant  vriables for task table
-    public static final String TASK_ID = "task_id";
-    public static final String TASK_COL1= "schedule_id";
-    public static final String TASK_COL2 = "task_name";
-    public static final String TASK_COL3 = "task_srt_time";
-    public static final String TASK_COL4 = "task_end_time";
-    public static final String TASK_COL5= "task_desp";
+    public static final String KEY_DESP = "task_desp";
 
     //private variables and constant for report table
     public static final String REPORT_ID ="report_id";
@@ -43,7 +35,6 @@ public class DataBase {
     private static final int DATABASE_VERSION =1;
 
     //variables for TABLES
-    private static final String TABLE_SCHEDULE ="schedule";
     private static final String TABLE_TASK ="task";
     private static final String TABLE_REPORT ="report";
 
@@ -67,25 +58,14 @@ public class DataBase {
         //method to create database for first time
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            sqLiteDatabase.execSQL("CREATE TABLE " +TABLE_SCHEDULE + "(" +
+            sqLiteDatabase.execSQL("CREATE TABLE " +TABLE_TASK + "(" +
                             KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
                             KEY_TITTLE +" TEXT NOT NULL, "+
                             KEY_FROM +" TEXT NOT NULL, "+
                             KEY_TILL +" TEXT NOT NULL ," +
-                            KEY_NOTIFICATION +" TEXT " +");"
+                            KEY_NOTIFICATION +" TEXT "+");"
             );
 
-            sqLiteDatabase.execSQL("CREATE TABLE " +TABLE_TASK + "(" +
-                            TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                            TASK_COL1 +" INTEGER NOT NULL, "+
-                            TASK_COL2 +" TEXT NOT NULL, "+
-                            TASK_COL3 +" TEXT NOT NULL, "+
-                            TASK_COL4 +" TEXT NOT NULL, "+
-                            TASK_COL5 +" TEXT NOT NULL, " +
-                            " FOREIGN KEY(" +TASK_COL1 +")" +
-                            " REFERENCES "+TABLE_SCHEDULE +"(" +KEY_ROWID +") "+
-                            ");"
-            );
 
 /*            sqLiteDatabase.execSQL("CRETE TABLE "+TABLE_REPORT+"(" +
                         REPORT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "+
@@ -101,7 +81,6 @@ public class DataBase {
         //if already have DAtabase in system
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_SCHEDULE);
             sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_TASK);
             //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " +TABLE_REPORT);
             onCreate(sqLiteDatabase);
@@ -130,28 +109,28 @@ public class DataBase {
 
 
     //insert query forschedule table
-    public long addSchedule(String title, String from, String till,Boolean notify){
+    public long addTask(String title, String from, String till,Boolean notify){
         ContentValues cv = new ContentValues();
         cv.put(KEY_TITTLE,title);
         cv.put(KEY_FROM, String.valueOf(from));
         cv.put(KEY_TILL, String.valueOf(till));
         cv.put(KEY_NOTIFICATION, Boolean.valueOf(notify));
-        return ourDatabase.insert(TABLE_SCHEDULE, null, cv);
+        return ourDatabase.insert(TABLE_TASK, null, cv);
 
     }
 
 
     //Get total number of schedule
-    public int getScheduleCount(){
+    public int getTaskCount(){
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null);
         return c.getCount();
     }
 
     //Get schedule title
-    public String getScheduleTitle(int position){
+    public String getTaskTitle(int position){
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null);
         int iTitle =c.getColumnIndex(KEY_TITTLE);
         c.moveToPosition(position);
         return c.getString(iTitle);
@@ -161,9 +140,9 @@ public class DataBase {
 
 
     //Get schedule from date
-    public String getScheduleFromDate(int index){
+    public String getTaskStartTime(int index){
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL,KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null);
         c.moveToPosition(index);
         int iFrom =c.getColumnIndex(KEY_FROM);
         return c.getString(iFrom);
@@ -171,28 +150,37 @@ public class DataBase {
 
 
     //Get schedule to date
-    public String getScheduleToDate(int index){
+    public String getTaskEndTime(int index){
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
+        Cursor c = ourDatabase.query(TABLE_TASK,columns,null,null,null,null,null);
         c.moveToPosition(index);
         int iTill =c.getColumnIndex(KEY_TILL);
         return c.getString(iTill);
     }
 
     //get schedule id
-    public long getScheduleId(int index){
+    public long getTaskId(int index){
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
+        Cursor c = ourDatabase.query(TABLE_TASK,columns,null,null,null,null,null);
         c.moveToPosition(index);
         int iId = c.getColumnIndex(KEY_ROWID);
         return c.getLong(iId);
+    }
 
+    //get last schedule id
+    //get schedule id
+    public int getLastTaskId() {
+        String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null);
+        c.moveToLast();
+        int iId = c.getColumnIndex(KEY_ROWID);
+        return c.getInt(iId);
     }
 
     //get notification
     public Boolean getNotification(int index){
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
+        Cursor c = ourDatabase.query(TABLE_TASK,columns,null,null,null,null,null);
         c.moveToPosition(index);
         int iId = c.getColumnIndex(KEY_NOTIFICATION);
         if(c.getInt(iId)==1){
@@ -211,15 +199,15 @@ public class DataBase {
         else {val = 0;}
 
 
-        ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +" SET "+KEY_NOTIFICATION +" = "+val+" WHERE " +KEY_ROWID +" = "+getId(index));
+        ourDatabase.execSQL("UPDATE "+TABLE_TASK +" SET "+KEY_NOTIFICATION +" = "+val+" WHERE " +KEY_ROWID +" = "+getId(index));
 
     }
 
 
     //check if schedule title already exist... returns true if entry already exists on database
-    public boolean checkScheduleTitle(String title){
+    public boolean checkTaskTitle(String title){
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE, columns, null, null, null, null, null);
+        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null);
 
         boolean result = false;
 
@@ -239,7 +227,7 @@ public class DataBase {
     //delete schedule from schedule table
     public void deleteSchedule(long id){
 
-        ourDatabase.delete(TABLE_SCHEDULE, KEY_ROWID + "=" + id, null);
+        ourDatabase.delete(TABLE_TASK, KEY_ROWID + "=" + id, null);
         //ourDatabase.execSQL("UPDATE "+TABLE_SCHEDULE +" SET "+KEY_ID +"= "+KEY_ID +"-1 " +"WHERE " +KEY_ROWID +" = "+"> "+id);
        /* long index,newValue;
         long front = id+1;
@@ -257,16 +245,6 @@ public class DataBase {
 
     //TODO add task not working
     //add task in task table
-    public long addTask(int sch_id, String title, String startTime, String endTime,String desp){
-        ContentValues cv = new ContentValues();
-        //cv.put(TASK_ID,"1");
-        cv.put(TASK_COL1,Integer.valueOf(sch_id));
-        cv.put(TASK_COL2, title);
-        cv.put(TASK_COL3, String.valueOf(startTime));
-        cv.put(TASK_COL4, String.valueOf(endTime));
-        cv.put(TASK_COL5, desp);
-        return ourDatabase.insert(TABLE_TASK,null,cv);
-    }
 
     //get KEYUD
     /*public int getKeyId(int id){
@@ -282,9 +260,9 @@ public class DataBase {
     //Get schedule title from
     public String getTitle(int position){
         //int pos = position +1;
-        int pos = getScheduleCount() - position;
+        int pos = getTaskCount() - position;
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
+        Cursor c = ourDatabase.query(TABLE_TASK,columns,null,null,null,null,null);
         c.moveToFirst();
         for(int i = 1; i<= pos-1; i++){
             c.moveToNext();
@@ -298,9 +276,9 @@ public class DataBase {
     //Get row id from cardview position
     public int getId(int position){
         //int pos = position +1;
-        int pos = getScheduleCount() - position;
+        int pos = getTaskCount() - position;
         String[] columns = new String[]{KEY_ROWID, KEY_TITTLE, KEY_FROM, KEY_TILL, KEY_NOTIFICATION};
-        Cursor c = ourDatabase.query(TABLE_SCHEDULE,columns,null,null,null,null,null);
+        Cursor c = ourDatabase.query(TABLE_TASK,columns,null,null,null,null,null);
         c.moveToFirst();
         for(int i = 1; i<= pos-1; i++){
             c.moveToNext();
@@ -386,8 +364,8 @@ public class DataBase {
         }
         return title;
     }
-
-    //Get startdesp
+*/
+  /*  //Get startdesp
     public String[] getDesp(int scheduleId){
         int iTitle;
         int count = 0;
@@ -409,47 +387,44 @@ public class DataBase {
         return title;
     }
 
-*/
 
-    public int getTaskCount(int scheduleID){
-//        addDummyValue();
+   /* public int getTaskCount(int scheduleID){
+        //addDummyValue();
+        int iTitle;
+        int val = 0;
         String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
         Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
-        int count;
-        int iSchId;
-        c.moveToFirst();
-        c.moveToNext();
-        //iSchId =c.getColumnIndex(TASK_COL1);
-        //while (!c.isLast()){
-        if(c.isNull(0)){
-            addDummyValue();
-            count=0;
-            //iSchId =c.getColumnIndex(TASK_ID);
-            //int count = c.getInt(iSchId);
-                //count++;
+        iTitle = c.getColumnIndex(TASK_COL1);
+        int count = c.getCount();
+        if(count==0){
+            return 0;
+        }else{
+           // while (!c.isLast()){
+             //   if(scheduleID==c.getInt(iTitle))
+               // val++;
+            }
+
+            return getId(iTitle);
             //}
-            //c.moveToNext();
-        }else {
-            iSchId = c.getColumnIndex(TASK_ID);
-            count = c.getInt(iSchId);
-        }
+    }*/
 
 
-        return count;
 
-        //return c.getInt(iSchId);
-    }
-
-    private void addDummyValue(){
+   /* public String[] getTskTitle(int schId){
         int val;
-        String[] columns = new String[]{TASK_ID,TASK_COL1,TASK_COL2,TASK_COL3,TASK_COL4,TASK_COL5};
-        Cursor c = ourDatabase.query(TABLE_TASK, columns, null, null, null, null, null,null);
-        c.moveToFirst();
-        val = c.getColumnIndex(TASK_ID);
-        if (c.getInt(val)!=1) {
-            addTask(10000000, "er", "fddsf", "Dfd", "dsfs");
+        String q = "select "+TASK_COL3+" from "+TABLE_TASK+" where "+TASK_COL1+" = "+schId;
+        Cursor c = ourDatabase.rawQuery(q,null);
+        String[] title = new String[c.getCount()];
+
+        for (int i = 0; i<= c.getCount(); i++){
+            val = c.getColumnIndex(TASK_COL3);
+            title[i] = c.getString(val);
+
         }
-    }
+        return  title;
+    }*/
+
+
 
 
 

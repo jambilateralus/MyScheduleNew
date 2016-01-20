@@ -2,6 +2,7 @@ package com.project.myschedule;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
 
 
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent add = new Intent(getBaseContext(),Add.class);
+        Intent add = new Intent(getBaseContext(),AddTask.class);
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             // Handle the camera action
@@ -155,11 +159,11 @@ public class MainActivity extends AppCompatActivity
         db.open();
         //test
         //db.addTask(1,"nepal","2","4","hello");
-        int pos = db.getScheduleCount();
-        for (int index = 0; index < db.getScheduleCount(); index++) {
+        int pos = db.getTaskCount();
+        for (int index = 0; index < db.getTaskCount(); index++) {
             pos--;
 
-            DataObject obj = new DataObject(db.getScheduleTitle(pos),db.getScheduleToDate(pos),db.getScheduleFromDate(pos),db.getScheduleId(pos),db.getNotification(pos));
+            DataObject obj = new DataObject(db.getTaskTitle(pos),db.getTaskStartTime(pos),db.getTaskEndTime(pos),db.getId(pos),db.getNotification(pos));
             results.add(index, obj);
         }
         db.close();

@@ -4,41 +4,40 @@ package com.project.myschedule;
  * Created by sushil on 1/16/16.
  */
 public class DataObject {
-    private String scheduleTitle;
-    private String toDate;
-    private  String fromDate;
-    private  long scheduleId;
+    private String taskTitle;
+    private String startTime;
+    private  String endTime;
+    private  long taskId;
     private Boolean notify;
 
-    DataObject (String scheduleTitle, String toDate, String fromDate, long scheduleId, Boolean notify){
-        this.scheduleTitle = scheduleTitle;
-        this.toDate = toDate;
-        this.fromDate = fromDate;
-        this.scheduleId = scheduleId;
+    DataObject (String taskTitle, String startTime, String endTime, long taskId, Boolean notify){
+        this.taskTitle = taskTitle;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.taskId = taskId;
         this.notify = notify;
     }
 
-    public String getScheduleTitle() {return scheduleTitle;}
+    public String getTaskTitle() {return taskTitle;}
 
-    public void setScheduleTitle(String scheduleTitle) {
-        this.scheduleTitle = scheduleTitle;
+    //public void setScheduleTitle(String scheduleTitle) {this.scheduleTitle = scheduleTitle;
+    //}
+
+    public String getStartTime() {
+        return startTime;
     }
 
-    public String getToDate() {
-        return toDate;
-    }
+    //public void setToDate(String toDate) {
+      //  this.toDate = toDate;
+    //}
 
-    public void setToDate(String toDate) {
-        this.toDate = toDate;
-    }
+    public String getEndTime(){return endTime;}
 
-    public String getFromDate(){return fromDate;}
+    public Long getTaskId(){return taskId;}
 
-    public Long getScheduleId(){return scheduleId;}
+    //public void  setFromDate(String fromDate){this.fromDate = fromDate;}
 
-    public void  setFromDate(String fromDate){this.fromDate = fromDate;}
-
-    public void setNotifcationStatus(Boolean satus){this.notify = satus;}
+    //public void setNotifcationStatus(Boolean satus){this.notify = satus;}
 
     public Boolean getNotificationStatus(){return notify;}
 

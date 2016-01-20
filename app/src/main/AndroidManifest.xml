@@ -21,8 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Add" >
-        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
@@ -31,15 +29,16 @@
         </activity>
         <activity android:name=".CalendarView" >
         </activity>
-        <activity android:name=".TaskList" >
-        </activity>
         <activity android:name=".AddTask" >
         </activity>
         <activity android:name=".Notification" >
         </activity>
 
         <receiver android:name=".AlarmReceiver" />
+        <receiver android:name=".EndAlarmReceiver" />
 
+        <activity android:name=".NotificationEnd" >
+        </activity>
     </application>
 
 </manifest>

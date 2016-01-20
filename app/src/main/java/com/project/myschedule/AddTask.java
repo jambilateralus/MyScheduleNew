@@ -31,13 +31,15 @@ public class AddTask extends AppCompatActivity {
     private EditText taskDesp;
     private int[] sTime = new int[2];
     private int[] eTime=new int[2];
-    private Bundle bundle;
+    private DataBase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
+        db = new DataBase(getBaseContext());
+        db.open();
 
 
         //
@@ -47,7 +49,7 @@ public class AddTask extends AppCompatActivity {
         taskDesp = (EditText) findViewById(R.id.taskDescp);
 
         //Set title
-        setTitle("New Task");
+        setTitle("New Task"+db.getLastTaskId());
 
         //Back arrow in action bar
         final ActionBar actionBar = getSupportActionBar();
@@ -155,9 +157,9 @@ public class AddTask extends AppCompatActivity {
 
             String startTime = ""+sTime[0]+" "+sTime[1];
             String endTime = ""+eTime[0]+" "+eTime[1];
-            String title = taskTitle.toString();
+            String title = taskTitle.getText().toString();
             String desp = taskDesp.toString();
-            int scheduleId = bundle.getInt("scheduleId");
+
 
             //int scheduleId = 1;
 
@@ -170,14 +172,22 @@ public class AddTask extends AppCompatActivity {
 
             else {
                 //Call database function from here
-                DataBase db = new DataBase(getBaseContext());
-                db.addTask(10,title,startTime,endTime,desp);
-                db.close();
-                //finish();
-
+                //Bundle bundl = getIntent().getBundleExtra("a");
+                //int a = bundl.getInt("a");
+                db.addTask(title, startTime, endTime, true);
+                this.finish();
+                Intent i = new Intent(getBaseContext(),MainActivity.class);
+                startActivity(i);
                 //Start Alarm
                 //startAlarm(sTime[0],sTime[1]);
-                new Alarm().addAlarm(sTime[0],sTime[1]);
+                int sId =db.getLastTaskId()*200;
+                int eId = db.getLastTaskId()*40;
+                //new Alarm().addAlarm(sId,sTime[0], sTime[1],0,title);
+                //new Alarm().addAlarm(eId,eTime[0],eTime[1],1,title);
+                new  Alarm(sId,sTime[0], sTime[1],0,title);
+                new Alarm(eId,eTime[0],eTime[1],1,title);
+                db.close();
+
             }
 
 

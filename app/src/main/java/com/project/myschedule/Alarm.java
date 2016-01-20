@@ -12,7 +12,13 @@ import java.util.Calendar;
  * Created by sushil on 1/20/16.
  */
 public class Alarm {
-    public void addAlarm(int hr, int min){
+
+
+    Intent intent;
+    //taskType = 0 for start task
+    //1 for task finish
+    public  Alarm(int id,int hr, int min,int taskType, String taskName){
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, hr);
@@ -26,33 +32,35 @@ public class Alarm {
         // given AlarmReciever in the Intent, the onRecieve() method of this class will execute when
         // alarm triggers and
         //we will write the code to send SMS inside onRecieve() method pf Alarmreciever class
-        Intent intentAlarm = new Intent(MainActivity.appContext, AlarmReceiver.class);
+        //Intent intentAlarm = new Intent(MainActivity.appContext, AlarmReceiver.class);
 
-        //PendingIntent pIntent = PendingIntent.getActivity(this,min, intentAlarm , 0);
+        //PendingIntent pIntent = PendingIntent.getActivity(MainActivity.appContext,min, intentAlarm , 0);
         // create the object
         AlarmManager alarmManager = (AlarmManager) MainActivity.appContext.getSystemService(Context.ALARM_SERVICE);
 
         //set the alarm for particular time
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), PendingIntent.getBroadcast(MainActivity.appContext, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+        //alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pIntent);
         //PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.appContext, id, new Intent(MainActivity.appContext,Notification.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
-        //pendingIntent.
-       // alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);//' , PendingIntent.FLAG_UPDATE_CURRENT;
-        //alarmManager.cancel(pendingIntent);
-        Toast.makeText(MainActivity.appContext, "Alarm Scheduled", Toast.LENGTH_LONG).show();
+
+        if(taskType==0) {
+            intent = new Intent(MainActivity.appContext, AlarmReceiver.class);
+        }else {
+            intent = new Intent(MainActivity.appContext, EndAlarmReceiver.class);
+        }
+
+        PendingIntent appIntent = PendingIntent.getBroadcast(MainActivity.appContext, id, intent,PendingIntent.FLAG_ONE_SHOT);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), appIntent);
+        Toast.makeText(MainActivity.appContext, "Task Scheduled", Toast.LENGTH_LONG).show();
     }
 
 
     public void stopAlarm(int alarmId){
-
+        PendingIntent.getBroadcast(MainActivity.appContext, alarmId, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT).cancel();
     }
 
     public void restartAlarm(int alarmId){
-
-    }
-
-
-    public void deleteAlarm(int alarmId){
 
     }
 
